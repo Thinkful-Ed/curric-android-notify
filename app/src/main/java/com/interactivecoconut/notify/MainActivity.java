@@ -1,6 +1,11 @@
 package com.interactivecoconut.notify;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -11,7 +16,7 @@ import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
-
+    private int notificationID = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +24,16 @@ public class MainActivity extends ActionBarActivity {
         /*
             Toast
          */
-        Button mButton = (Button) findViewById(R.id.button);
+        Button mButton = (Button) findViewById(R.id.button);Button notificationButton = (Button) findViewById(R.id.button2);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayNotification();
+            }
+        });
+        /*
+            Notify
+         */
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,8 +42,28 @@ public class MainActivity extends ActionBarActivity {
                 toast.setGravity(Gravity.CENTER,0,0);
             }
         });
+
     }
 
+    protected void displayNotification() {
+        //Build your notification
+        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(
+                this);
+        nBuilder.setContentTitle("Notification");
+        nBuilder.setContentText("This is a Notification");
+        nBuilder.setSmallIcon(R.drawable.ic_launcher);
+        nBuilder.setAutoCancel(true);
+
+        //Add a notification action
+        Intent displayMainIntent = new Intent(this, MainActivity.class);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this,0,displayMainIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        nBuilder.setContentIntent(resultPendingIntent);
+
+        //post notification
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(notificationID, nBuilder.build());
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
