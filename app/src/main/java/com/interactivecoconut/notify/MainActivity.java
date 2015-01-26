@@ -24,16 +24,7 @@ public class MainActivity extends ActionBarActivity {
         /*
             Toast
          */
-        Button mButton = (Button) findViewById(R.id.button);Button notificationButton = (Button) findViewById(R.id.button2);
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayNotification();
-            }
-        });
-        /*
-            Notify
-         */
+        Button mButton = (Button) findViewById(R.id.button);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,6 +33,17 @@ public class MainActivity extends ActionBarActivity {
                 toast.setGravity(Gravity.CENTER,0,0);
             }
         });
+        /*
+            Notify
+         */
+        Button notificationButton = (Button) findViewById(R.id.button2);
+        notificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayNotification();
+            }
+        });
+
 
     }
 
