@@ -1,5 +1,6 @@
 package com.interactivecoconut.notify;
 
+import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -13,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -43,10 +46,65 @@ public class MainActivity extends ActionBarActivity {
                 displayNotification();
             }
         });
+        /*
+            Alarm
+         */
+        Button alarmButton = (Button) findViewById(R.id.button3);
+        alarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setAlarm();
+            }
+        });
 
 
+        Button cancelAlarmButton = (Button) findViewById(R.id.button4);
+        cancelAlarmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelAlarm();
+            }
+        });
     }
 
+    protected void setAlarm() {
+        //get reference to AlarmManager
+        AlarmManager alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+
+        //Elapsed real time non-repeating
+        /*
+        alarmMgr.set(AlarmManager.ELAPSED_REALTIME,
+                  SystemClock.elapsedRealtime() + 10 * 1000,
+                  getMainActivityPendingIntent());
+        */
+
+        //Elapse real time repeating
+        /*
+        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
+                SystemClock.elapsedRealtime() + 10 * 1000,
+                10 * 1000, getMainActivityPendingIntent());
+        */
+
+        //RTC alarm repeating
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, 16);
+        calendar.set(Calendar.MINUTE, 18);
+        long milliseconds = calendar.getTimeInMillis();
+
+        alarmMgr.setInexactRepeating(AlarmManager.RTC, milliseconds,
+                AlarmManager.INTERVAL_DAY, getMainActivityPendingIntent());
+
+    }
+    protected void cancelAlarm() {
+        AlarmManager alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+        alarmMgr.cancel(getMainActivityPendingIntent());
+    }
+    protected PendingIntent getMainActivityPendingIntent() {
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return(pendingIntent);
+    }
     protected void displayNotification() {
         //Build your notification
         NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(
@@ -57,9 +115,7 @@ public class MainActivity extends ActionBarActivity {
         nBuilder.setAutoCancel(true);
 
         //Add a notification action
-        Intent displayMainIntent = new Intent(this, MainActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this,0,displayMainIntent,PendingIntent.FLAG_UPDATE_CURRENT);
-        nBuilder.setContentIntent(resultPendingIntent);
+        nBuilder.setContentIntent(getMainActivityPendingIntent());
 
         //post notification
         NotificationManager mNotificationManager =
