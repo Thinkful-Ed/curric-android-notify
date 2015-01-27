@@ -1,6 +1,5 @@
 package com.interactivecoconut.notify;
 
-import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -14,8 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import java.util.Calendar;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -66,40 +63,16 @@ public class MainActivity extends ActionBarActivity {
             }
         });
     }
-
     protected void setAlarm() {
-        //get reference to AlarmManager
-        AlarmManager alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-
-        //Elapsed real time non-repeating
-        /*
-        alarmMgr.set(AlarmManager.ELAPSED_REALTIME,
-                  SystemClock.elapsedRealtime() + 10 * 1000,
-                  getMainActivityPendingIntent());
-        */
-
-        //Elapse real time repeating
-        /*
-        alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
-                SystemClock.elapsedRealtime() + 10 * 1000,
-                10 * 1000, getMainActivityPendingIntent());
-        */
-
-        //RTC alarm repeating
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.set(Calendar.HOUR_OF_DAY, 16);
-        calendar.set(Calendar.MINUTE, 18);
-        long milliseconds = calendar.getTimeInMillis();
-
-        alarmMgr.setInexactRepeating(AlarmManager.RTC, milliseconds,
-                AlarmManager.INTERVAL_DAY, getMainActivityPendingIntent());
-
+        Alarm alarm = new Alarm();
+        alarm.setAlarm(this);
     }
     protected void cancelAlarm() {
-        AlarmManager alarmMgr = (AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.cancel(getMainActivityPendingIntent());
+        Alarm alarm = new Alarm();
+        alarm.cancelAlarm(this);
     }
+    //REFACTORED - moved to Alarm class
+
     protected PendingIntent getMainActivityPendingIntent() {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
