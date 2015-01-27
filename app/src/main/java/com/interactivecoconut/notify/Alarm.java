@@ -19,13 +19,13 @@ public class Alarm {
         //Elapsed real time non-repeating
         alarmMgr.set(AlarmManager.ELAPSED_REALTIME,
                 SystemClock.elapsedRealtime() + 10 * 1000,
-                getMainActivityPendingIntent());
+                getBroadcastActivityPendingIntent());
         */
 
         //Elapse real time repeating
         alarmMgr.setInexactRepeating(AlarmManager.ELAPSED_REALTIME,
                 SystemClock.elapsedRealtime() + 10 * 1000,
-                10 * 1000, getMainActivityPendingIntent(context));
+                10 * 1000, getBroadcastActivityPendingIntent(context));
 
         /*
         //RTC alarm repeating
@@ -36,7 +36,7 @@ public class Alarm {
         long milliseconds = calendar.getTimeInMillis();
 
         alarmMgr.setInexactRepeating(AlarmManager.RTC, milliseconds,
-                AlarmManager.INTERVAL_DAY, getMainActivityPendingIntent(context));
+                AlarmManager.INTERVAL_DAY, getBroadcastActivityPendingIntent(context));
         */
 
 
@@ -52,7 +52,7 @@ public class Alarm {
     }
     protected void cancelAlarm(Context context) {
         AlarmManager alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.cancel(getMainActivityPendingIntent(context));
+        alarmMgr.cancel(getBroadcastActivityPendingIntent(context));
 
         //disable BootReceiver
         ComponentName bootReceiver = new ComponentName(context, BootReceiver.class);
@@ -64,9 +64,16 @@ public class Alarm {
 
         Log.i("alarm","Cancel alarm");
     }
+    protected PendingIntent getBroadcastActivityPendingIntent(Context context) {
+        Intent intent = new Intent(context, AlarmBroadcastReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+        return(pendingIntent);
+    }
     protected PendingIntent getMainActivityPendingIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         return(pendingIntent);
     }
 }

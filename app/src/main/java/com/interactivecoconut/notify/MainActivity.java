@@ -1,11 +1,6 @@
 package com.interactivecoconut.notify;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
@@ -16,7 +11,6 @@ import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
-    private int notificationID = 100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,27 +67,10 @@ public class MainActivity extends ActionBarActivity {
     }
     //REFACTORED - moved to Alarm class
 
-    protected PendingIntent getMainActivityPendingIntent() {
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return(pendingIntent);
-    }
+
     protected void displayNotification() {
-        //Build your notification
-        NotificationCompat.Builder nBuilder = new NotificationCompat.Builder(
-                this);
-        nBuilder.setContentTitle("Notification");
-        nBuilder.setContentText("This is a Notification");
-        nBuilder.setSmallIcon(R.drawable.ic_launcher);
-        nBuilder.setAutoCancel(true);
-
-        //Add a notification action
-        nBuilder.setContentIntent(getMainActivityPendingIntent());
-
-        //post notification
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(notificationID, nBuilder.build());
+        Notification notification = new Notification();
+        notification.createNotification(this);
     }
 
     @Override
