@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
-public class Notification {
+public class Notifier {
     private int notificationID = 100;
     public void createNotification(Context context) {
         //Build your notification

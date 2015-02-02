@@ -69,8 +69,8 @@ public class MainActivity extends ActionBarActivity {
 
 
     protected void displayNotification() {
-        Notification notification = new Notification();
-        notification.createNotification(this);
+        Notifier notifier = new Notifier();
+        notifier.createNotification(this);
     }
 
     @Override

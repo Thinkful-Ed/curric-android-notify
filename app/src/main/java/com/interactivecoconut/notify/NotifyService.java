@@ -12,8 +12,8 @@ public class NotifyService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Notification notification = new Notification();
-        notification.createNotification(this);
+        Notifier notifier = new Notifier();
+        notifier.createNotification(this);
         AlarmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
