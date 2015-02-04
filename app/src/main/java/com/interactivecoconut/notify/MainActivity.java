@@ -2,12 +2,10 @@ package com.interactivecoconut.notify;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -16,21 +14,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         /*
-            Toast
-         */
-        Button mButton = (Button) findViewById(R.id.button);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Live long and prosper", Toast.LENGTH_SHORT);
-                toast.show();
-                toast.setGravity(Gravity.CENTER,0,0);
-            }
-        });
-        /*
             Notify
          */
-        Button notificationButton = (Button) findViewById(R.id.button2);
+        Button notificationButton = (Button) findViewById(R.id.button);
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,7 +26,7 @@ public class MainActivity extends ActionBarActivity {
         /*
             Alarm
          */
-        Button alarmButton = (Button) findViewById(R.id.button3);
+        Button alarmButton = (Button) findViewById(R.id.button2);
         alarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
         });
 
 
-        Button cancelAlarmButton = (Button) findViewById(R.id.button4);
+        Button cancelAlarmButton = (Button) findViewById(R.id.button3);
         cancelAlarmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
