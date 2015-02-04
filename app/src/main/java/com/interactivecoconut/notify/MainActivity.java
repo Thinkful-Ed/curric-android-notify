@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
         /*
             Notify
          */
-        Button notificationButton = (Button) findViewById(R.id.button2);
+        Button notificationButton = (Button) findViewById(R.id.button);
         notificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
